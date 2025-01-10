@@ -1,0 +1,16 @@
+{
+  "name": "rosterproject",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "devClient" : "cd client && npm run dev",
+    "devServer" : "cd server && venv/bin/flask run --debug",
+    "dev" : "concurrently \"npm run devServer\" \"npm run devClient\""
+
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}

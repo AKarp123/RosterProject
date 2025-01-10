@@ -1,0 +1,23 @@
+services: 
+  rosterproject:
+    build: .
+    ports:
+      - "3000:3000"
+    depends_on:
+      - mongodb
+    networks:
+      - rosternetwork
+  mongodb:
+    image: mongo
+    restart: always
+    container_name: mongodb
+    volumes: 
+      - ./data:/data/db
+    ports:
+      - "27017:27017"
+    command: mongod --noauth
+    networks:
+      - rosternetwork
+networks:
+  rosternetwork:
+    driver: bridge
