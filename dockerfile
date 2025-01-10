@@ -14,5 +14,6 @@ COPY ./server /app/server
 RUN pip install -r /app/server/requirements.txt
 ENV FLASK_ENV=production
 ENV FLASK_APP=server/app/app.py
+ENV MONGODB_URI=mongodb://mongodb:27017
 
 CMD ["gunicorn", "-b", ":3000", "server.app.app:app"]

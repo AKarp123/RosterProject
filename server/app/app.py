@@ -1,9 +1,15 @@
 from flask import Flask, request, render_template
 from pymongo import MongoClient
+from dotenv import load_dotenv
+import os
+from flask_cors import CORS
 
-client = MongoClient("mongodb://mongodb:27017", serverSelectionTimeoutMS=1000)
+load_dotenv()
+
+client = MongoClient(os.getenv("MONGODB_URI"), serverSelectionTimeoutMS=1000)
 rosterDb = client["rosterProject"]
 app = Flask(__name__, static_folder="../../client/dist", static_url_path="/", template_folder="../../client/dist")
+CORS(app)
 
 # @app.route('/')
 # def hello_world():
@@ -23,6 +29,7 @@ def hello_world_api():
 @app.route("/api/addStudent", methods=["POST"])
 def add_student():
     data = request.get_json()
+    
     # print(data)
     try:
         student = {
@@ -62,6 +69,13 @@ def get_stats():
     }
     majors = {}
     years = {}
+    
+    # try:
+    #     major = request.args["major"]
+    # except:
+    #     major = None
+    
+    
     for student in rosterDb.students.find():
         if student["major"] in majors:
             majors[student["major"]] += 1
@@ -75,8 +89,14 @@ def get_stats():
 
     stats["major"] = majors
     stats["graduationYear"] = years
+    
+    # if major != None:
+    #     return {"success" : True, "stats" : stats["major"]}
 
-    return {"success": True, "stats": stats}    
+    return {"success": True, "stats": stats}  
+
+
+
 
 
 if __name__ == "__main__":
