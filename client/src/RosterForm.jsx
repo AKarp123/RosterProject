@@ -34,27 +34,6 @@ const RosterForm = ({ switchView }) => {
                 }
             });
     };
-
-    const handleDelete = (e) => {
-        e.preventDefault();
-
-        axios
-            .delete("/api/deleteStudent", {
-                firstName,
-                lastName,
-            })
-            .then((res) => {
-                setMessage(res.data.message);
-                setError(!res.data.success);
-                if (res.data.success) {
-                    setFirstName("");
-                    setLastName("");
-                    setTimeout(() => {
-                        setMessage("");
-                    }, 5000);
-                }
-            });
-    };
     return (
         <form
             style={{
@@ -90,9 +69,6 @@ const RosterForm = ({ switchView }) => {
                 onChange={(e) => setGraduationYear(e.target.value)}
             />
             <button type="submit">Add</button>
-            <button type="button" onClick={handleDelete}>
-                Delete
-            </button>
             <Link to="/stats">
                 <button type="button" style={{ width: "100%" }} >
                     View Stats
